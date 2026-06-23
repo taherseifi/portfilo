@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- پس‌زمینه تیره -->
+  <rect width="32" height="32" rx="6" fill="#0a0c10"/>
+  <!-- حرف T با رنگ آبی accent -->
+  <text x="16" y="23" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700"
+        fill="#4fa3e0" text-anchor="middle" letter-spacing="-1">TS</text>
+  <!-- خط نارنجی پایین -->
+  <rect x="4" y="27" width="24" height="2" rx="1" fill="#e8a020"/>
+</svg>

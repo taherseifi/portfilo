@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   CSS VARIABLES — متغیرهای تم
+   ===================================================================== */
+@layer base {
+  :root {
+    --nav-h: 58px;
+  }
+
+  /* DARK theme (پیش‌فرض) */
+  html.dark {
+    --bg:       #0a0c10;
+    --surface:  #131720;
+    --s2:       #1a2030;
+    --border:   #242c3a;
+    --b2:       #2e3848;
+    --text:     #dde3ed;
+    --text2:    #9aaabb;
+    --muted:    #6a7a90;
+    --accent:   #e8a020;
+    --blue:     #4fa3e0;
+    --card-bg:  #131720;
+    --card-hov: #1a2030;
+    --img-f:    brightness(0.9) contrast(1.05);
+    --glow:     rgba(79,163,224,0.10);
+    /* tag colors */
+    --tw:  #4fa3e0; --tw-bg: rgba(79,163,224,0.12); --tw-b: rgba(79,163,224,0.3);
+    --t3:  #3dbf8c; --t3-bg: rgba(61,191,140,0.12); --t3-b: rgba(61,191,140,0.3);
+    --tf:  #a572d4; --tf-bg: rgba(165,114,212,0.12);--tf-b: rgba(165,114,212,0.3);
+    --tc:  #e8a020; --tc-bg: rgba(232,160,32,0.12); --tc-b: rgba(232,160,32,0.3);
+  }
+
+  /* LIGHT theme */
+  html.light {
+    --bg:       #f0f2f6;
+    --surface:  #ffffff;
+    --s2:       #e8edf5;
+    --border:   #d0d8e8;
+    --b2:       #b8c4d8;
+    --text:     #1a2235;
+    --text2:    #3a4a60;
+    --muted:    #6a7a95;
+    --accent:   #c07010;
+    --blue:     #1a7ac0;
+    --card-bg:  #ffffff;
+    --card-hov: #edf1f8;
+    --img-f:    brightness(1.0) contrast(0.98);
+    --glow:     rgba(26,122,192,0.07);
+    --tw:  #1a7ac0; --tw-bg: rgba(26,122,192,0.09);  --tw-b: rgba(26,122,192,0.3);
+    --t3:  #149664; --t3-bg: rgba(20,150,100,0.09);  --t3-b: rgba(20,150,100,0.3);
+    --tf:  #7b35b8; --tf-bg: rgba(123,53,184,0.09);  --tf-b: rgba(123,53,184,0.3);
+    --tc:  #c07010; --tc-bg: rgba(192,112,16,0.09);  --tc-b: rgba(192,112,16,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* فونت پایه هر زبان */
+  html[lang="de"] body { font-family: 'Inter', sans-serif; }
+  html[lang="en"] body { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  html[lang="tr"] body { font-family: 'Nunito', 'Inter', sans-serif; }
+  html[lang="fa"] body { font-family: 'Vazirmatn', sans-serif; }
+}
+
+/* =====================================================================
+   UTILITY CLASSES با CSS vars
+   ===================================================================== */
+@layer components {
+  /* Layout */
+  .page-pad { padding-top: var(--nav-h); }
+
+  /* Cards */
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    background-color: var(--card-hov);
+    border-color: var(--b2);
+    transform: translateY(-2px);
+  }
+
+  /* Section header */
+  .sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .sec-num  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+  .sec-title { font-size: 1.25rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+  .sec-line { flex: 1; height: 1px; background-color: var(--border); }
+
+  /* Tags */
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+  .tag-wood { background: var(--tw-bg); color: var(--tw); border: 1px solid var(--tw-b); }
+  .tag-3d   { background: var(--t3-bg); color: var(--t3); border: 1px solid var(--t3-b); }
+  .tag-foam { background: var(--tf-bg); color: var(--tf); border: 1px solid var(--tf-b); }
+  .tag-cad  { background: var(--tc-bg); color: var(--tc); border: 1px solid var(--tc-b); }
+
+  /* Skill pills */
+  .pill { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 3px; white-space: nowrap; border: 1px solid var(--border); background-color: var(--s2); color: var(--muted); }
+  .pill-cam { background: var(--tw-bg); border-color: var(--tw-b); color: var(--tw); }
+  .pill-mc  { background: var(--t3-bg); border-color: var(--t3-b); color: var(--t3); }
+
+  /* Meta grid */
+  .meta-key { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--blue); letter-spacing: 0.07em; text-transform: uppercase; }
+  .meta-val { font-size: 12px; color: var(--muted); }
+
+  /* Nav */
+  .nav-link {
+    font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 6px;
+    color: var(--muted); transition: color 0.15s, background-color 0.15s; white-space: nowrap;
+    text-decoration: none; cursor: pointer; background: transparent; border: none;
+  }
+  .nav-link:hover { color: var(--text); background-color: var(--s2); }
+  .nav-link.active { color: var(--text); background-color: var(--s2); }
+
+  .lang-btn {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border);
+    color: var(--muted); background: transparent; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lang-btn:hover { color: var(--text); background-color: var(--s2); border-color: var(--blue); }
+  .lang-btn.active { color: var(--text); background-color: var(--s2); border-color: var(--blue); }
+
+  .theme-btn {
+    width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); background: transparent; color: var(--muted);
+    cursor: pointer; font-size: 15px; transition: all 0.15s;
+  }
+  .theme-btn:hover { background-color: var(--s2); border-color: var(--blue); color: var(--text); }
+
+  /* Project image slider */
+  .proj-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+  .proj-slide.active { opacity: 1; }
+
+  /* Dot indicator */
+  .proj-dot { width: 6px; height: 6px; border-radius: 50%; border: none; background: var(--b2); cursor: pointer; transition: all 0.2s; }
+  .proj-dot.active { background: var(--blue); transform: scale(1.4); }
+
+  /* CV sections */
+  .cv-sec-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  .cv-sec-title::before { content: '//'; color: var(--b2); }
+
+  /* Contact button */
+  .cbtn {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em;
+    padding: 10px 20px; border-radius: 6px; border: 1px solid var(--border);
+    background-color: var(--s2); color: var(--text); cursor: pointer; transition: all 0.15s;
+    text-decoration: none; display: inline-block;
+  }
+  .cbtn:hover { border-color: var(--blue); color: var(--blue); }
+  .cbtn-primary {
+    background-color: var(--accent); border-color: var(--accent); color: #000; font-weight: 700;
+  }
+  .cbtn-primary:hover { opacity: 0.9; color: #000; }
+}
+
+/* =====================================================================
+   ANIMATIONS
+   ===================================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.proj-card-anim { animation: fadeUp 0.4s ease both; }
+.proj-card-anim:nth-child(1) { animation-delay: 0.00s; }
+.proj-card-anim:nth-child(2) { animation-delay: 0.06s; }
+.proj-card-anim:nth-child(3) { animation-delay: 0.12s; }
+.proj-card-anim:nth-child(4) { animation-delay: 0.18s; }
+.proj-card-anim:nth-child(5) { animation-delay: 0.24s; }
+.proj-card-anim:nth-child(6) { animation-delay: 0.30s; }
+.proj-card-anim:nth-child(7) { animation-delay: 0.36s; }
+.proj-card-anim:nth-child(8) { animation-delay: 0.42s; }
+
+/* Gallery slider */
+.gal-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
+.gal-slide.active { opacity: 1; }
+
+/* =====================================================================
+   LIGHT MODE OVERRIDES برای عناصری که با tailwind dark: پوشش نمیدن
+   ===================================================================== */
+html.light nav {
+  background-color: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--border);
+}
+html.light .hero-grid-bg { opacity: 0.3; }
