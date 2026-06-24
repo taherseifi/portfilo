@@ -222,3 +222,18 @@ html.light .hero-grid-bg { opacity: 0.3; }
     grid-template-columns: repeat(4, 1fr) !important;
   }
 }
+
+/* Persönliche Daten grid — موبایل:1 | تبلت:2 | کامپیوتر:3 */
+.pers-grid-responsive {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 481px) {
+  .pers-grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1025px) {
+  .pers-grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
