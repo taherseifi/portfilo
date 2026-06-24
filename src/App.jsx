@@ -165,8 +165,8 @@ export default function App() {
             </div>
             <div style={{
               display:'grid',
-              /* فقط ۴ ستون — ۸ آیتم → ۲ ردیف ۴تایی، بدون فضای خالی */
-              gridTemplateColumns:'repeat(4, 1fr)',
+              /* موبایل:1 ستون | تبلت:2 ستون | دسکتاپ:4 ستون */
+              gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 200px), 1fr))',
               gap:1,
               backgroundColor:'var(--border)',
               border:'1px solid var(--border)',
