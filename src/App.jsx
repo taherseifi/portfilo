@@ -163,10 +163,10 @@ export default function App() {
               <h2 className="sec-title">{t.sec_software}</h2>
               <div className="sec-line" />
             </div>
-            <div style={{
+            <div className="sw-grid-responsive" style={{
               display:'grid',
-              /* موبایل:1 ستون | تبلت:2 ستون | دسکتاپ:4 ستون */
-              gridTemplateColumns:'repeat(auto-fill, minmax(min(100%, 200px), 1fr))',
+              /* ۸ سلول = ۴×۲ — دسکتاپ: 4 ستون | موبایل: 2 ستون */
+              gridTemplateColumns:'repeat(4, 1fr)',
               gap:1,
               backgroundColor:'var(--border)',
               border:'1px solid var(--border)',
