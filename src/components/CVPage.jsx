@@ -124,7 +124,7 @@ export default function CVPage({ t, lang }) {
       {/* Sprachen */}
       <Section title={t.cv_lang}>
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1,
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 1,
           backgroundColor: 'var(--border)', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden',
         }}>
           {[[t.lang_fa, t.lang_native, 5],[t.lang_tr,'C2',5],[t.lang_de,'A2→B1',2],[t.lang_en,'A2',2]].map(([name, level, dots]) => (
