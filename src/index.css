@@ -201,3 +201,12 @@ html.light nav {
   border-bottom-color: var(--border);
 }
 html.light .hero-grid-bg { opacity: 0.3; }
+
+/* Software grid — دسکتاپ: 4 ستون | تبلت: 2 ستون | موبایل: 1 ستون */
+.sw-grid-responsive { grid-template-columns: repeat(4, 1fr) !important; }
+@media (max-width: 768px) {
+  .sw-grid-responsive { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .sw-grid-responsive { grid-template-columns: repeat(1, 1fr) !important; }
+}
