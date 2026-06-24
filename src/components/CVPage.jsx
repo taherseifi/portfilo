@@ -169,8 +169,8 @@ export default function CVPage({ t, lang }) {
 
       {/* Personal */}
       <Section title={t.cv_personal}>
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1,
+        <div className="pers-grid-responsive" style={{
+          display: 'grid', gap: 1,
           backgroundColor: 'var(--border)', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden',
         }}>
           {[
