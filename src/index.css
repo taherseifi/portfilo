@@ -203,21 +203,22 @@ html.light nav {
 html.light .hero-grid-bg { opacity: 0.3; }
 
 /* Software grid
-   کامپیوتر  (>1024px): 4 ستون × 2 ردیف
+   کامپیوتر  (>1024px) : 4 ستون × 2 ردیف  — پیش‌فرض
    تبلت    (481-1024px): 2 ستون × 4 ردیف
-   موبایل    (<=480px): 1 ستون × 8 ردیف
+   موبایل    (<=480px) : 1 ستون × 8 ردیف
+   ترتیب: از موبایل به دسکتاپ (mobile-first)
 */
 .sw-grid-responsive {
   display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;  /* کامپیوتر: 4 ستون */
+  grid-template-columns: 1fr !important;
 }
-@media (max-width: 1024px) and (min-width: 481px) {
+@media (min-width: 481px) {
   .sw-grid-responsive {
-    grid-template-columns: repeat(2, 1fr) !important;  /* تبلت: 2 ستون */
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
-@media (max-width: 480px) {
+@media (min-width: 1025px) {
   .sw-grid-responsive {
-    grid-template-columns: 1fr !important;  /* موبایل: 1 ستون */
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 }
