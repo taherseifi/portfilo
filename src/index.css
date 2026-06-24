@@ -202,11 +202,21 @@ html.light nav {
 }
 html.light .hero-grid-bg { opacity: 0.3; }
 
-/* Software grid — دسکتاپ: 4 ستون | تبلت: 2 ستون | موبایل: 1 ستون */
-.sw-grid-responsive { grid-template-columns: repeat(4, 1fr) !important; }
-@media (max-width: 768px) {
-  .sw-grid-responsive { grid-template-columns: repeat(2, 1fr) !important; }
+/* Software grid — دسکتاپ: 4×2 | تبلت: 2×4 | موبایل: 1×8 */
+.sw-grid-responsive {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-template-rows: repeat(2, auto) !important;
+}
+@media (max-width: 900px) {
+  .sw-grid-responsive {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(4, auto) !important;
+  }
 }
 @media (max-width: 480px) {
-  .sw-grid-responsive { grid-template-columns: repeat(1, 1fr) !important; }
+  .sw-grid-responsive {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: repeat(8, auto) !important;
+  }
 }
