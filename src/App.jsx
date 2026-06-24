@@ -164,9 +164,7 @@ export default function App() {
               <div className="sec-line" />
             </div>
             <div className="sw-grid-responsive" style={{
-              display:'grid',
-              /* ۸ سلول = ۴×۲ — دسکتاپ: 4 ستون | موبایل: 2 ستون */
-              gridTemplateColumns:'repeat(4, 1fr)',
+              /* ستون‌ها و ردیف‌ها توسط CSS کلاس کنترل میشن */
               gap:1,
               backgroundColor:'var(--border)',
               border:'1px solid var(--border)',
