@@ -109,7 +109,7 @@ export default function CVPage({ t, lang }) {
             ['3-Achs CNC', 'Busellato H2-16 · Jet Optimum'],
             ['Schaumstoff / Laser', 'CNC-Schwamm · CNC-Laser'],
             [t.lbl_sw, 'ArtCAM · AlphaCAM · Aspire · AutoCAD · Rhino · Pytha/CAM · Powermill'],
-            [`${t.lbl_ctrl} (7)`, 'Siemens · NC · TAPCAM · Beckhoff · Radionics · NC (Bolano) · Pegasos NC'],
+            [`${t.lbl_ctrl} (7)`, 'Siemens · NC · TAPCAM · Beckhoff · Radionics · NC (Busellato) · Pegasos NC'],
             [t.cv_other, t.cv_other_v],
             [t.cv_prod, t.cv_prod_v],
           ].map(([k, v]) => (

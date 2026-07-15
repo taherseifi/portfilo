@@ -55,7 +55,7 @@ export const PROJECTS = [
 
   // ─────────────────────────────────────────────────────────────────
   // پروژه ۰۳ — صفحه میز ناهارخوری
-  // دستگاه: Busellato Jet Optima + Bolano H2-16
+  // دستگاه: Busellato Jet Optima + Busellato H2-16
   // ─────────────────────────────────────────────────────────────────
   {
     id: "03",
@@ -69,7 +69,7 @@ export const PROJECTS = [
     ],
     meta: [
       { key: "lbl_sw",  val: "AlphaCAM · ArtCAM" },
-      { key: "lbl_mc",  val: "Busellato Jet Optima · Bolano H2-16" },
+      { key: "lbl_mc",  val: "Busellato Jet Optima · Busellato H2-16" },
       { key: "lbl_mat", valKey: "p03_mat" },
     ],
   },
@@ -141,7 +141,7 @@ export const PROJECTS = [
 
   // ─────────────────────────────────────────────────────────────────
   // پروژه ۰۷ — حکاکی تزئینی روی MDF
-  // دستگاه: Bolano H2-16
+  // دستگاه: Busellato H2-16
   // ─────────────────────────────────────────────────────────────────
   {
     id: "07",
@@ -150,11 +150,11 @@ export const PROJECTS = [
     descKey:  "p07_desc",
     main:   "/img/20180702_125831.jpg",      // ← حکاکی گل روی MDF در حال کار
     thumbs: [
-      "/img/p07_h216_machine.jpg",          // ← دستگاه Bolano H2-16
+      "/img/p07_h216_machine.jpg",          // ← دستگاه Busellato H2-16
     ],
     meta: [
       { key: "lbl_sw",  val: "Aspire (Vectric)" },
-      { key: "lbl_mc",  val: "Bolano H2-16" },
+      { key: "lbl_mc",  val: "Busellato H2-16" },
       { key: "lbl_mat", val: "MDF" },
     ],
   },
@@ -190,13 +190,13 @@ export const SOFTWARE = [
   // ردیف اول
   { catKey: "sw_5ax",     items: ["Busellato Jet Optima", "SCM Multi-Achse"] },
   { catKey: "sw_4ax",     items: ["Schnitzer Nero 4x3", "CNC-Holzdrehmaschinen"] },
-  { catKey: "sw_3ax",     items: ["Bolano H2-16", "Bolano Jet Optimum"] },
+  { catKey: "sw_3ax",     items: ["Busellato H2-16", "Busellato Jet Optimum"] },
   { catKey: "sw_foam",    items: ["CNC-Schwammschneidemaschine", "Beckhoff TwinCAT"] },
   // ردیف دوم
   { catKey: "sw_laser",   items: ["CNC Lasermaschine", "Gravur & Schneiden"] },
   { catKey: "sw_camwood", items: ["ArtCAM", "AlphaCAM", "Aspire (Vectric)"] },
   { catKey: "sw_cad",     items: ["AutoCAD 2017", "Rhino 3D", "Pegasos CAD/CAM"] },
-  { catKey: "sw_ctrl",    items: ["Siemens CNC", "NC-Steuerung", "TAPCAM / Tapcad", "Beckhoff TwinCAT", "Radionics", "NC (Bolano)", "Pegasos NC"] },
+  { catKey: "sw_ctrl",    items: ["Siemens CNC", "NC-Steuerung", "TAPCAM / Tapcad", "Beckhoff TwinCAT", "Radionics", "NC (Busellato)", "Pegasos NC"] },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════

@@ -77,7 +77,7 @@ export default function App() {
   const skills = [
     {l:'AlphaCAM',cls:'pill-cam'},{l:'ArtCAM',cls:'pill-cam'},{l:'Aspire',cls:'pill-cam'},
     {l:'AutoCAD',cls:''},{l:'Rhino 3D',cls:''},{l:'Powermill',cls:''},
-    {l:'Busellato 5x',cls:'pill-mc'},{l:'SCM · Bolano',cls:'pill-mc'},
+    {l:'Busellato 5x',cls:'pill-mc'},{l:'SCM · Busellato',cls:'pill-mc'},
     {l:'Siemens · NC',cls:''},{l:'TAPCAM · Beckhoff',cls:''},{l:'Radionics',cls:''},{l:'G-Code 2D/3D',cls:''},
   ]
 
