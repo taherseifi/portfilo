@@ -9,6 +9,7 @@ export default function Lightbox({ src, onClose }) {
   }, [onClose])
 
   if (!src) return null
+  const isVideo = /\.(mp4|webm|mov)$/i.test(src)
   return (
     <div
       onClick={onClose}
@@ -28,11 +29,19 @@ export default function Lightbox({ src, onClose }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
       >✕</button>
-      <img
-        src={src} alt=""
-        onClick={e => e.stopPropagation()}
-        style={{ maxWidth: '92vw', maxHeight: '88vh', borderRadius: 8, boxShadow: '0 8px 48px rgba(0,0,0,0.8)' }}
-      />
+      {isVideo ? (
+        <video
+          src={src} controls autoPlay playsInline
+          onClick={e => e.stopPropagation()}
+          style={{ maxWidth: '92vw', maxHeight: '88vh', borderRadius: 8, boxShadow: '0 8px 48px rgba(0,0,0,0.8)' }}
+        />
+      ) : (
+        <img
+          src={src} alt=""
+          onClick={e => e.stopPropagation()}
+          style={{ maxWidth: '92vw', maxHeight: '88vh', borderRadius: 8, boxShadow: '0 8px 48px rgba(0,0,0,0.8)' }}
+        />
+      )}
     </div>
   )
 }

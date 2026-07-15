@@ -180,6 +180,31 @@ export const PROJECTS = [
       { key: "lbl_ctrl", val: "Siemens · NC · TAPCAM · Beckhoff · Radionics" },
     ],
   },
+  // ─────────────────────────────────────────────────────────────────
+  // پروژه ۰۹ — تندیس/متن سه‌بعدی بزرگ برای نمایشگاه کتاب
+  // ابعاد کلی: 3m × 2m — چند بخش، هر بخش از ۶ لایه MDF ۲۵mm (۱۵cm ضخامت)
+  // دستگاه: Busellato Jet Optima 5x — نرم‌افزار: AlphaCAM
+  // ─────────────────────────────────────────────────────────────────
+  {
+    id: "09",
+    tag: "3d",
+    titleKey: "p09_title",
+    descKey:  "p09_desc",
+    main:   "/img/p09_booktext_assembled.jpg",   // ← بخش مونتاژشده روی زمین
+    thumbs: [
+      "/img/p09_booktext_cnc_head.jpg",          // ← دستگاه در حال فرزکاری بخش
+      "/img/p09_booktext_busellato.jpg",         // ← میز Busellato با بخش پله‌ای
+      "/img/p09_booktext_stack.jpg",             // ← استک بخش‌های برش‌خورده
+      "/video/p09_booktext_v1.mp4",              // ← ویدیوی فرآیند فرزکاری ۱
+      "/video/p09_booktext_v2.mp4",              // ← ویدیوی فرآیند فرزکاری ۲
+    ],
+    meta: [
+      { key: "lbl_sw",  val: "AlphaCAM" },
+      { key: "lbl_mc",  val: "Busellato Jet Optima 5x" },
+      { key: "lbl_mat", valKey: "p09_mat" },
+      { key: "lbl_dim", val: "3m × 2m" },
+    ],
+  },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════
