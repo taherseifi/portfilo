@@ -1,229 +1,187 @@
 import { useState, useEffect, useRef } from 'react'
 
 // ─────────────────────────────────────────────────────────────────────
-// PROJECT CARD — اسلایدر با انیمیشن fade + slide
-// هر کارت تایمر مستقل خودش رو داره
+// NAVBAR — دسکتاپ: ۴ دکمه زبان | موبایل: dropdown
+// همیشه LTR
 // ─────────────────────────────────────────────────────────────────────
+const LANGS = ['de', 'en', 'tr', 'fa']
 
-const TAG_MAP = { wood:'tag-wood', '3d':'tag-3d', foam:'tag-foam', cad:'tag-cad' }
-const TAG_KEY = { wood:'tag_wood', '3d':'tag_3d', foam:'tag_foam', cad:null }
-const SLIDE_INTERVALS = [5500, 6200, 7000, 4800, 6800, 5800, 4500, 7200]
+export default function Navbar({ page, setPage, lang, setLang, dark, setDark, t }) {
+  const [dropOpen, setDropOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640)
+  const dropRef = useRef(null)
 
-// ← تشخیص ویدیو از روی پسوند فایل (mp4/webm/mov)
-const isVideo = (src) => typeof src === 'string' && /\.(mp4|webm|mov)$/i.test(src)
+  // تشخیص موبایل/دسکتاپ
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
 
-export default function ProjectCard({ project, t, onImgClick, cardIndex = 0 }) {
-  const { id, tag, titleKey, descKey, main, thumbs = [], meta } = project
-  const allImages = [main, ...thumbs]
+  // بستن dropdown با کلیک بیرون
+  useEffect(() => {
+    if (!dropOpen) return
+    const handler = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) {
+        setDropOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [dropOpen])
 
-  const [idx, setIdx]         = useState(0)
-  const [prevIdx, setPrevIdx] = useState(null)   // عکس قبلی برای انیمیشن
-  const [dir, setDir]         = useState(1)       // 1=رفتن به جلو، -1=برگشت
-  const [animating, setAnimating] = useState(false)
-  const timerRef = useRef(null)
-  const interval = SLIDE_INTERVALS[cardIndex % SLIDE_INTERVALS.length] || 3500
-
-  const goTo = (next, direction = 1) => {
-    if (animating) return
-    const n = ((next % allImages.length) + allImages.length) % allImages.length
-    if (n === idx) return
-
-    setDir(direction)
-    setPrevIdx(idx)
-    setIdx(n)
-    setAnimating(true)
-
-    // بعد از 700ms انیمیشن تموم میشه
-    setTimeout(() => {
-      setPrevIdx(null)
-      setAnimating(false)
-    }, 700)
-
-    // ریست تایمر
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => goTo(idx + 1, 1), interval)
+  const handleLang = (l) => {
+    setLang(l)
+    setDropOpen(false)
   }
 
-  useEffect(() => {
-    if (allImages.length <= 1) return
-    timerRef.current = setInterval(() => {
-      setIdx(i => {
-        const next = (i + 1) % allImages.length
-        setPrevIdx(i)
-        setDir(1)
-        setAnimating(true)
-        setTimeout(() => { setPrevIdx(null); setAnimating(false) }, 700)
-        return next
-      })
-    }, interval)
-    return () => clearInterval(timerRef.current)
-  }, [allImages.length, interval]) // eslint-disable-line
-
-  // CSS انیمیشن — slide از چپ/راست + fade
-  const slideIn  = `slideIn${dir > 0 ? 'Right' : 'Left'}`
-  const slideOut = `slideOut${dir > 0 ? 'Left' : 'Right'}`
-
   return (
-    <>
-      <style>{`
-        @keyframes slideInRight  { from { opacity:0; transform:translateX(60px)  } to { opacity:1; transform:translateX(0) } }
-        @keyframes slideInLeft   { from { opacity:0; transform:translateX(-60px) } to { opacity:1; transform:translateX(0) } }
-        @keyframes slideOutLeft  { from { opacity:1; transform:translateX(0) } to { opacity:0; transform:translateX(-60px) } }
-        @keyframes slideOutRight { from { opacity:1; transform:translateX(0) } to { opacity:0; transform:translateX(60px)  } }
-      `}</style>
+    <nav
+      dir="ltr"
+      style={{
+        position: 'fixed', top: 0, left: 0, right: 0,
+        zIndex: 100, height: 58,
+        display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 14px', gap: 8,
+        backgroundColor: 'var(--bg)',
+        borderBottom: '1px solid var(--border)',
+        transition: 'background-color 0.3s',
+      }}
+    >
+      {/* Logo */}
+      <span style={{
+        fontFamily: "'JetBrains Mono',monospace",
+        fontSize: 13, color: 'var(--accent)',
+        letterSpacing: '0.08em', textTransform: 'uppercase',
+        flexShrink: 0, whiteSpace: 'nowrap',
+      }}>
+        TS / CNC
+      </span>
 
-      <div className="card proj-card-anim" style={{ display:'flex', flexDirection:'column' }}>
-
-        {/* ── Slider ── */}
-        <div
-          style={{
-            position:'relative', height:210,
-            backgroundColor:'var(--s2)',
-            borderBottom:'1px solid var(--border)',
-            overflow:'hidden', cursor:'zoom-in', flexShrink:0,
-          }}
-          onClick={() => onImgClick(allImages[idx])}
-        >
-          {/* عکس/ویدیو قبلی — داره میره بیرون */}
-          {prevIdx !== null && (
-            isVideo(allImages[prevIdx]) ? (
-              <video
-                key={`out-${prevIdx}`}
-                src={allImages[prevIdx]}
-                muted playsInline
-                style={{
-                  position:'absolute', inset:0,
-                  width:'100%', height:'100%',
-                  objectFit:'cover', objectPosition:'center',
-                  filter:'var(--img-f)',
-                  animation: `${slideOut} 0.7s cubic-bezier(0.4,0,0.2,1) forwards`,
-                  zIndex: 1,
-                }}
-              />
-            ) : (
-              <img
-                key={`out-${prevIdx}`}
-                src={allImages[prevIdx]}
-                alt=""
-                style={{
-                  position:'absolute', inset:0,
-                  width:'100%', height:'100%',
-                  objectFit:'cover', objectPosition:'center',
-                  filter:'var(--img-f)',
-                  animation: `${slideOut} 0.7s cubic-bezier(0.4,0,0.2,1) forwards`,
-                  zIndex: 1,
-                }}
-              />
-            )
-          )}
-
-          {/* عکس/ویدیو جدید — داره میاد داخل */}
-          {isVideo(allImages[idx]) ? (
-            <video
-              key={`in-${idx}`}
-              src={allImages[idx]}
-              autoPlay muted loop playsInline
-              style={{
-                position:'absolute', inset:0,
-                width:'100%', height:'100%',
-                objectFit:'cover', objectPosition:'center',
-                filter:'var(--img-f)',
-                animation: animating ? `${slideIn} 0.7s cubic-bezier(0.4,0,0.2,1) forwards` : 'none',
-                zIndex: 2,
-              }}
-            />
-          ) : (
-            <img
-              key={`in-${idx}`}
-              src={allImages[idx]}
-              alt=""
-              style={{
-                position:'absolute', inset:0,
-                width:'100%', height:'100%',
-                objectFit:'cover', objectPosition:'center',
-                filter:'var(--img-f)',
-                animation: animating ? `${slideIn} 0.7s cubic-bezier(0.4,0,0.2,1) forwards` : 'none',
-                zIndex: 2,
-              }}
-            />
-          )}
-
-          {/* آیکن پخش برای اسلایدهای ویدیویی */}
-          {isVideo(allImages[idx]) && (
-            <div style={{
-              position:'absolute', top:8, left:8, zIndex:3,
-              background:'rgba(0,0,0,0.55)', color:'#fff',
-              fontSize:10, padding:'3px 8px', borderRadius:20,
-              display:'flex', alignItems:'center', gap:4,
-              fontFamily:"'JetBrains Mono',monospace", letterSpacing:'0.03em',
-            }}>▶ VIDEO</div>
-          )}
-
-          {/* Dots */}
-          {allImages.length > 1 && (
-            <div style={{
-              position:'absolute', bottom:8, left:0, right:0,
-              display:'flex', justifyContent:'center', gap:5, zIndex:3,
-            }}>
-              {allImages.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={e => { e.stopPropagation(); goTo(i, i > idx ? 1 : -1) }}
-                  style={{
-                    width: i === idx ? 18 : 6, height:6,
-                    borderRadius:3, border:'none',
-                    background: i === idx ? 'var(--blue)' : 'rgba(255,255,255,0.5)',
-                    cursor:'pointer', transition:'all 0.3s', padding:0,
-                  }}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Arrows */}
-          {allImages.length > 1 && (
-            <>
-              {[['‹', -1, 'left:6px'], ['›', 1, 'right:6px']].map(([ch, d, pos]) => (
-                <button
-                  key={ch}
-                  onClick={e => { e.stopPropagation(); goTo(idx + d, d) }}
-                  style={{
-                    position:'absolute', top:'50%', transform:'translateY(-50%)',
-                    [pos.split(':')[0]]: pos.split(':')[1],
-                    zIndex:3,
-                    background:'rgba(0,0,0,0.4)', border:'1px solid rgba(255,255,255,0.2)',
-                    color:'#fff', width:26, height:26, borderRadius:'50%',
-                    display:'flex', alignItems:'center', justifyContent:'center',
-                    fontSize:15, cursor:'pointer', transition:'background 0.2s',
-                  }}
-                >{ch}</button>
-              ))}
-            </>
-          )}
-        </div>
-
-        {/* ── Body ── */}
-        <div style={{ padding:'16px 18px', display:'flex', flexDirection:'column', gap:10, flex:1 }}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-            <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:10, color:'var(--muted)', letterSpacing:'0.08em' }}>0{id}</span>
-            <span className={`tag ${TAG_MAP[tag] || 'tag-cad'}`}>
-              {TAG_KEY[tag] ? (t[TAG_KEY[tag]] || tag) : 'CAD/CAM'}
-            </span>
-          </div>
-          <h3 style={{ fontSize:15, fontWeight:600, lineHeight:1.3, color:'var(--text)' }}>{t[titleKey] || titleKey}</h3>
-          <p style={{ fontSize:13, color:'var(--text2)', lineHeight:1.6, flex:1 }}>{t[descKey] || descKey}</p>
-          <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'3px 12px', borderTop:'1px solid var(--border)', paddingTop:12, marginTop:4 }}>
-            {meta.map((m, i) => {
-              const label = m.key.startsWith('lbl_') ? (t[m.key] || m.key) : m.key
-              const value = m.valKey ? (t[m.valKey] || m.valKey) : m.val
-              return [
-                <span key={`k${i}`} className="meta-key">{label}</span>,
-                <span key={`v${i}`} className="meta-val">{value}</span>,
-              ]
-            })}
-          </div>
-        </div>
+      {/* Pages */}
+      <div style={{ display: 'flex', gap: 2, flexShrink: 0 }}>
+        {['portfolio', 'cv'].map((p) => (
+          <button
+            key={p}
+            onClick={() => setPage(p)}
+            className={`nav-link ${page === p ? 'active' : ''}`}
+            style={{ fontSize: 13, padding: '5px 10px' }}
+          >
+            {p === 'portfolio' ? t.nav_portfolio : t.nav_cv}
+          </button>
+        ))}
       </div>
-    </>
+
+      {/* راست: زبان + تم */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+
+        {/* ── دسکتاپ: ۴ دکمه کنار هم ── */}
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: 2 }}>
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`lang-btn ${lang === l ? 'active' : ''}`}
+                style={{ fontSize: 11, padding: '3px 7px' }}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ── موبایل: dropdown ── */}
+        {isMobile && (
+          <div ref={dropRef} style={{ position: 'relative' }}>
+            {/* دکمه اصلی — زبان فعلی */}
+            <button
+              onClick={() => setDropOpen(v => !v)}
+              style={{
+                fontFamily: "'JetBrains Mono',monospace",
+                fontSize: 11, fontWeight: 600,
+                padding: '4px 8px',
+                borderRadius: 5,
+                border: '1px solid var(--blue)',
+                backgroundColor: 'var(--s2)',
+                color: 'var(--text)',
+                cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 5,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {lang.toUpperCase()}
+              {/* فلش */}
+              <span style={{
+                display: 'inline-block',
+                transform: dropOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s',
+                fontSize: 9, lineHeight: 1,
+              }}>▼</span>
+            </button>
+
+            {/* منوی dropdown */}
+            {dropOpen && (
+              <div style={{
+                position: 'absolute', top: 'calc(100% + 6px)', right: 0,
+                backgroundColor: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: 8,
+                overflow: 'hidden',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                minWidth: 80,
+                zIndex: 200,
+                // انیمیشن باز شدن
+                animation: 'dropDown 0.18s ease forwards',
+              }}>
+                <style>{`
+                  @keyframes dropDown {
+                    from { opacity: 0; transform: translateY(-6px); }
+                    to   { opacity: 1; transform: translateY(0); }
+                  }
+                `}</style>
+                {LANGS.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => handleLang(l)}
+                    style={{
+                      display: 'block', width: '100%',
+                      padding: '10px 14px',
+                      fontFamily: "'JetBrains Mono',monospace",
+                      fontSize: 12, fontWeight: 600,
+                      textAlign: 'left',
+                      backgroundColor: lang === l ? 'var(--s2)' : 'transparent',
+                      color: lang === l ? 'var(--blue)' : 'var(--text2)',
+                      border: 'none',
+                      borderBottom: '1px solid var(--border)',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.15s',
+                    }}
+                    onMouseEnter={e => { if (lang !== l) e.currentTarget.style.backgroundColor = 'var(--s2)' }}
+                    onMouseLeave={e => { if (lang !== l) e.currentTarget.style.backgroundColor = 'transparent' }}
+                  >
+                    {l.toUpperCase()}
+                    {lang === l && (
+                      <span style={{ marginLeft: 8, color: 'var(--blue)', fontSize: 10 }}>✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* تم */}
+        <button
+          className="theme-btn"
+          onClick={() => setDark(!dark)}
+          style={{ width: 30, height: 30, fontSize: 14, flexShrink: 0 }}
+          title="Toggle theme"
+        >
+          {dark ? '🌙' : '☀️'}
+        </button>
+      </div>
+    </nav>
   )
 }
