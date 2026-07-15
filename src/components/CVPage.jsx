@@ -106,7 +106,7 @@ export default function CVPage({ t, lang }) {
           {[
             ['5-Achs CNC', 'Busellato Jet Optima · SCM'],
             ['4-Achs Drehen', 'Schnitzer Nero 4x3'],
-            ['3-Achs CNC', 'Bolano H2-16 · Jet Optimum'],
+            ['3-Achs CNC', 'Busellato H2-16 · Jet Optimum'],
             ['Schaumstoff / Laser', 'CNC-Schwamm · CNC-Laser'],
             [t.lbl_sw, 'ArtCAM · AlphaCAM · Aspire · AutoCAD · Rhino · Pytha/CAM · Powermill'],
             [`${t.lbl_ctrl} (7)`, 'Siemens · NC · TAPCAM · Beckhoff · Radionics · NC (Bolano) · Pegasos NC'],
