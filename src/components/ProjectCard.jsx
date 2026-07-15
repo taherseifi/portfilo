@@ -9,6 +9,9 @@ const TAG_MAP = { wood:'tag-wood', '3d':'tag-3d', foam:'tag-foam', cad:'tag-cad'
 const TAG_KEY = { wood:'tag_wood', '3d':'tag_3d', foam:'tag_foam', cad:null }
 const SLIDE_INTERVALS = [5500, 6200, 7000, 4800, 6800, 5800, 4500, 7200]
 
+// ← تشخیص ویدیو از روی پسوند فایل (mp4/webm/mov)
+const isVideo = (src) => typeof src === 'string' && /\.(mp4|webm|mov)$/i.test(src)
+
 export default function ProjectCard({ project, t, onImgClick, cardIndex = 0 }) {
   const { id, tag, titleKey, descKey, main, thumbs = [], meta } = project
   const allImages = [main, ...thumbs]
@@ -81,37 +84,80 @@ export default function ProjectCard({ project, t, onImgClick, cardIndex = 0 }) {
           }}
           onClick={() => onImgClick(allImages[idx])}
         >
-          {/* عکس قبلی — داره میره بیرون */}
+          {/* عکس/ویدیو قبلی — داره میره بیرون */}
           {prevIdx !== null && (
+            isVideo(allImages[prevIdx]) ? (
+              <video
+                key={`out-${prevIdx}`}
+                src={allImages[prevIdx]}
+                muted playsInline
+                style={{
+                  position:'absolute', inset:0,
+                  width:'100%', height:'100%',
+                  objectFit:'cover', objectPosition:'center',
+                  filter:'var(--img-f)',
+                  animation: `${slideOut} 0.7s cubic-bezier(0.4,0,0.2,1) forwards`,
+                  zIndex: 1,
+                }}
+              />
+            ) : (
+              <img
+                key={`out-${prevIdx}`}
+                src={allImages[prevIdx]}
+                alt=""
+                style={{
+                  position:'absolute', inset:0,
+                  width:'100%', height:'100%',
+                  objectFit:'cover', objectPosition:'center',
+                  filter:'var(--img-f)',
+                  animation: `${slideOut} 0.7s cubic-bezier(0.4,0,0.2,1) forwards`,
+                  zIndex: 1,
+                }}
+              />
+            )
+          )}
+
+          {/* عکس/ویدیو جدید — داره میاد داخل */}
+          {isVideo(allImages[idx]) ? (
+            <video
+              key={`in-${idx}`}
+              src={allImages[idx]}
+              autoPlay muted loop playsInline
+              style={{
+                position:'absolute', inset:0,
+                width:'100%', height:'100%',
+                objectFit:'cover', objectPosition:'center',
+                filter:'var(--img-f)',
+                animation: animating ? `${slideIn} 0.7s cubic-bezier(0.4,0,0.2,1) forwards` : 'none',
+                zIndex: 2,
+              }}
+            />
+          ) : (
             <img
-              key={`out-${prevIdx}`}
-              src={allImages[prevIdx]}
+              key={`in-${idx}`}
+              src={allImages[idx]}
               alt=""
               style={{
                 position:'absolute', inset:0,
                 width:'100%', height:'100%',
                 objectFit:'cover', objectPosition:'center',
                 filter:'var(--img-f)',
-                animation: `${slideOut} 0.7s cubic-bezier(0.4,0,0.2,1) forwards`,
-                zIndex: 1,
+                animation: animating ? `${slideIn} 0.7s cubic-bezier(0.4,0,0.2,1) forwards` : 'none',
+                zIndex: 2,
               }}
             />
           )}
 
-          {/* عکس جدید — داره میاد داخل */}
-          <img
-            key={`in-${idx}`}
-            src={allImages[idx]}
-            alt=""
-            style={{
-              position:'absolute', inset:0,
-              width:'100%', height:'100%',
-              objectFit:'cover', objectPosition:'center',
-              filter:'var(--img-f)',
-              animation: animating ? `${slideIn} 0.7s cubic-bezier(0.4,0,0.2,1) forwards` : 'none',
-              zIndex: 2,
-            }}
-          />
+          {/* آیکن پخش برای اسلایدهای ویدیویی */}
+          {isVideo(allImages[idx]) && (
+            <div style={{
+              position:'absolute', top:8, left:8, zIndex:3,
+              background:'rgba(0,0,0,0.55)', color:'#fff',
+              fontSize:10, padding:'3px 8px', borderRadius:20,
+              display:'flex', alignItems:'center', gap:4,
+              fontFamily:"'JetBrains Mono',monospace", letterSpacing:'0.03em',
+            }}>▶ VIDEO</div>
+          )}
 
           {/* Dots */}
           {allImages.length > 1 && (
