@@ -112,6 +112,8 @@ export default function CVPage({ t, lang }) {
             [`${t.lbl_ctrl} (7)`, 'Siemens · NC · TAPCAM · Beckhoff · Radionics · NC (Busellato) · Pegasos NC'],
             [t.cv_other, t.cv_other_v],
             [t.cv_prod, t.cv_prod_v],
+            [t.cv_handtools, t.cv_handtools_v],
+            [t.cv_assembly, t.cv_assembly_v],
           ].map(([k, v]) => (
             <div key={k} style={{ backgroundColor: 'var(--surface)', padding: '14px 16px' }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'var(--accent)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 5 }}>{k}</div>
@@ -146,6 +148,8 @@ export default function CVPage({ t, lang }) {
             [t.edu1_t, 'Iran', t.edu1_b],
             [t.edu2_t, t.edu2_s, t.edu2_b],
             [t.edu3_t, t.edu3_s, 'A2→B1'],
+            [t.edu4_t, t.edu4_s, t.edu4_b],
+            [t.edu5_t, t.edu5_s, t.edu5_b],
           ].map(([title, sub, badge]) => (
             <div key={title} style={{
               backgroundColor: 'var(--surface)', border: '1px solid var(--border)',
